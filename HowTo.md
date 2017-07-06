@@ -23,27 +23,26 @@ Before continuing, I'll assume that you're using the english language for the in
 Edit the routes file in your project folder `routes/web.php` and inside the main group, where you should already have 2 routes defined, 'home' & 'dashboard',
 add a new route group:
 
-    ```
+```
     Route::group(['prefix' => 'myContactPersons', 'as' => 'myContactPersons.'], function () {
-
+    
         Route::get('', 'MyContactPersonsController@index')->name('index');
     });
-    ```
+```
 
 Now, if you click on the menu link, you'll get 500 error stating that the controller doesn't exist, so let's make one:
-    ```
-        php artisan make:controller MyContactPersonsController
-    
-    ```
+```
+    php artisan make:controller MyContactPersonsController
+
+```
 
 and also create the index function inside:
-    ```
-        public function index()
-        {
-    
-            return 'ok';
-        }
-    ```
+```
+    public function index()
+    {
+        return 'ok';
+    }
+```
 
 If you try click on the menu link, now you'll not longer get an error but a toaster message letting you know you are not authorized for this action
 We'll need to create a permission for the new route, and we'll do that next.
@@ -78,9 +77,9 @@ Before continuing, I'll assume that you're using the english language for the in
 We had previously created a single permission, and that's fine. 
 Sometimes though, we might need to create permissions for a resource type of route, such as when declaring routes like:
 
-    ```
+```
     Route::resource('myContactPersons', 'MyContactPersonsController');
-    ```
+```
 
 As a refresher, when doing this, Laravel under the hood declares a bunch of predefined routes, with names such as:
 ```
@@ -123,7 +122,7 @@ It should look like this
 
 and work just as before.
 
-**Note** The resource routes declarations should be *after* the declaration of the same group, if you also have the group defined separately. 
+**Note** The resource routes declarations should be *after* the declaration of the same group, if you also have the group defined separately.
 
 In the next step, we're going to add a new page.
 
@@ -138,16 +137,16 @@ If aiming for a consistent look, the page should have the following elements:
 - inside the 'content header' section, it should include the breadcrumbs template: `@include('laravel-enso/menumanager::breadcrumbs')`
 
     ```
-    @section('content')
-    
-        <section class="content-header" v-cloak>
-            @include('laravel-enso/menumanager::breadcrumbs')
-        </section>
-        <section class="content">
-            <h1>My Contact Persons</h1>
-        </section>
-    
-    @endsection
+        @section('content')
+        
+            <section class="content-header" v-cloak>
+                @include('laravel-enso/menumanager::breadcrumbs')
+            </section>
+            <section class="content">
+                <h1>My Contact Persons</h1>
+            </section>
+        
+        @endsection
     ```
 
 - it should also include some scripts, when needed within `@push('scripts') @endpush`
@@ -212,4 +211,13 @@ In order to do that, we'll need to:
      </vue-select>
  ```
  
+ **Note** The resource routes declarations should be *after* the declaration of the same group, if you also have the group defined separately.
+ 
 ### Adding a Data-Table
+
+I'll assume that you have already looked at the documentation for the DataTable module, as it can take a lot of options and parameters and I will not go over each and every one of them.
+
+Let's start:
+- first, we must include the `DataTable` trait inside our controller: `use DataTable;`. It provide the `initTable()` method, that gets called when the VueJS component will set itself up.
+- next, we should declare the `protected $tableStructureClass = MyContactPersonsTableStructure::class;` that gets used by the trait, both when setting up the VueJS component and also when fetching and refreshing data.
+- obviously, we need to   
