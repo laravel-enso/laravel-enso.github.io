@@ -1,8 +1,10 @@
 ## How to
 
+Before continuing, I'll assume that you're using the english language for the interface and that you're already logged in as an admin user.
+
 ### Creating a Menu
 
-Before continuing, I'll assume that you're using the english language for the interface and that you're already logged in as an admin user.
+
 
 Let's start:
 - Go to the System menu -> Menus, click on `Create Menu` and fill out
@@ -15,10 +17,14 @@ Let's start:
 
 
 If you click on the new menu, you get a 404 response, since the route doesn't exist. We'll do that next.
+
+**Notes** 
+- For an existent role, you may set the newly created menu as a default menu by accessing System -> Roles and editing the desired role.
+- Once you've created a new menu or menus, don't forget to add the proper translations if you're using multiple languages
  
 ### Adding Routes and a Controller
 
-Before continuing, I'll assume that you're using the english language for the interface and that you're already logged in as an admin user.
+
 
 Edit the routes file in your project folder `routes/web.php` and inside the main group, where you should already have 2 routes defined, 'home' & 'dashboard',
 add a new route group:
@@ -47,9 +53,11 @@ and also create the index function inside:
 If you try click on the menu link, now you'll not longer get an error but a toaster message letting you know you are not authorized for this action
 We'll need to create a permission for the new route, and we'll do that next.
 
+**Notes**
+
 ### Creating a Permission
 
-Before continuing, I'll assume that you're using the english language for the interface and that you're already logged in as an admin user.
+
 
 Let's start.
 First, let's create a new group for our permissions:
@@ -72,7 +80,7 @@ And now, we should be able to finally see the ok text we previously put in the i
 
 ### Creating Permissions for a Resource
 
-Before continuing, I'll assume that you're using the english language for the interface and that you're already logged in as an admin user.
+
 
 We had previously created a single permission, and that's fine. 
 Sometimes though, we might need to create permissions for a resource type of route, such as when declaring routes like:
