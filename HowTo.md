@@ -11,7 +11,7 @@ Let's start:
    - the desired name, for example 'My Contact Persons'
    - the icon class, for example 'fa fa-address-book  fa-fw'
    - the link that's going to get accessed, for example, 'myContactPersons'
-- let's leave out parents, so we'll see the menu in the root, and set 'No' for children
+- set no parents, so we'll see the menu in the root, and set 'No' for children
 - Save & and you should already be able to see the new menu
 - Finally, set the roles, if you need to, otherwise admin should be selected as default.
 
@@ -36,11 +36,9 @@ add a new route group:
     });
 ```
 
-Now, if you click on the menu link, you'll get 500 error stating that the controller doesn't exist, so let's make one:
-```
-    php artisan make:controller MyContactPersonsController
+Now, if you click on the menu link, you'll get 500 error stating that the [controller](https://laravel.com/docs/5.4/controllers#defining-controllers) doesn't exist, so let's make one with 
 
-```
+`php artisan make:controller MyContactPersonsController`
 
 and also create the index function inside:
 ```
@@ -55,9 +53,12 @@ We'll need to create a permission for the new route, and we'll do that next.
 
 **Notes**
 
+The name attribute for all routes is required in order for permissions to work correctly.
+
+Inside the main group of permissions you have get all the goodies that come with the  `core` middleware group. 
+You can define routes outside the main group but you would lose access to the current request user, no logging for actions, no access to impersonation, etc. 
+
 ### Creating a Permission
-
-
 
 Let's start.
 First, let's create a new group for our permissions:
@@ -70,7 +71,7 @@ Next, let's create the permissions:
    - the route name for `name`, for example `myContactPersons.index`
    - for `description` use any description that makes sense for you, for example 'Index page for My Contact Persons'
    - for `type`, we'll use 'read', since we're not doing any write operations for this request
-   - for `default access`, let's use 'Yes', since that means that any new role added will get by default access to this route
+   - for `default access`, let's use 'Yes', since that means that any existing and new roles added will get, by default, access to this route
    - and for `Permission Group`, we should select the group we previously created, for example `myContactPersons`
 - let's leave out parents, so we'll see the menu in the root, and set 'No' for children
 - Save
@@ -78,26 +79,17 @@ Next, let's create the permissions:
 
 And now, we should be able to finally see the ok text we previously put in the index method.
 
-### Creating Permissions for a Resource
+**Note** All new permissions will have the `default access` flag set to 'No' but they will still be attached to the admin role.
 
+### Creating Permissions for a Resource Controller
 
 
 We had previously created a single permission, and that's fine. 
-Sometimes though, we might need to create permissions for a resource type of route, such as when declaring routes like:
+Sometimes though, we might need to create permissions for a [resource type](https://laravel.com/docs/5.4/controllers#resource-controllers) of route, such as when declaring routes like:
 
 ```
     Route::resource('myContactPersons', 'MyContactPersonsController');
 ```
-
-As a refresher, when doing this, Laravel under the hood declares a bunch of predefined routes, with names such as:
-```
-    myContactPersons.index
-    myContactPersons.show
-    myContactPersons.update
-    etc.
-```
-
-You may list all the routes using `php artisan route:list`.
 
 Of course, in our case, we would need to create permissions for each and every one, and we could that, one by one, or we can use the Enso built-in feature to do that in one step.
 
