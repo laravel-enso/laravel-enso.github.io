@@ -1,5 +1,5 @@
 <!-- Choose one of the following: -->
-#### This is  a**bug | feature request**.
+#### This is  a **bug | feature request**.
 
 <!-- Make sure that everything is checked below: -->
 #### Prerequisites
